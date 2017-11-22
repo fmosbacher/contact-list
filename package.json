@@ -1,0 +1,23 @@
+{
+"name": "contact-list",
+"version": "1.0.0",
+"description": "Users informations",
+"main": "app.js",
+"scripts": {
+    "start": "nodejs app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+},
+"repository": {
+    "type": "git",
+    "url": "git+https://github.com/fmosbacher/contact-list.git"
+},
+"keywords": [
+    "MEAN"
+],
+"author": "Fernando Mosbacher Azevedo",
+"license": "ISC",
+"bugs": {
+    "url": "https://github.com/fmosbacher/contact-list/issues"
+},
+"homepage": "https://github.com/fmosbacher/contact-list#readme"
+}

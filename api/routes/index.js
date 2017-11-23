@@ -8,4 +8,10 @@ router
     .get(usersCtrl.usersGetAll)
     .post(usersCtrl.usersAddOne);
 
+router
+    .route('/users/:userId')
+    .get(usersCtrl.usersGetOne)
+    .put(usersCtrl.usersUpdateOne)
+    .delete(usersCtrl.usersDeleteOne);
+
 module.exports = router;

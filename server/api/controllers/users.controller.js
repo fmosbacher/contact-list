@@ -17,6 +17,26 @@ module.exports.usersGetAll = function(getReq, getRes) {
 };
 
 module.exports.usersAddOne = function(postReq, postRes) {
+    var username = postReq.body.username;
+
+    User.find({name: username}, function(err, user) {
+        if (err) {
+            console.log('Error creating user');
+            postRes
+                .status(404)
+                .json(err);
+            return;
+        } else if (user) {
+            console.log('Error creating user: User exists');
+            postRes
+                .status(404)
+                .json({
+                    "message": "Error on creating user: User exists"
+                });
+            return;
+        }
+    });
+
     User
         .create({
             username: postReq.body.username,
@@ -42,7 +62,7 @@ module.exports.usersAddOne = function(postReq, postRes) {
 };
 
 module.exports.usersGetOne = function(getReq, getRes) {
-    var userId = getReq.body.userId;
+    var userId = getReq.params.userId;
     
     User
         .findById(userId)
@@ -67,8 +87,8 @@ module.exports.usersGetOne = function(getReq, getRes) {
 };
 
 module.exports.usersUpdateOne = function(putReq, putRes) {
-    var username = postReq.body.userId;
-
+    var userId = putReq.params.userId;
+    console.log('userId ->', userId);
     User
         .findById(userId)
         .select('-username')
@@ -95,36 +115,35 @@ module.exports.usersUpdateOne = function(putReq, putRes) {
             user.email = putReq.body.email;
             user.phone = putReq.body.phone;
 
-            hotel
-                .save(function(err, userUpdated) {
+            user
+                .save(function(err) {
                     if(err) {
-                        res
+                        putRes
                             .status(500)
                             .json(err);
                     } else {
-                        res
+                        putRes
                             .status(204)
                             .json({});
+                        console.log('User updated');
                     }
                 });
-
-            console.log('User updated', user);
         })
 };
 
 module.exports.usersDeleteOne = function(delReq, delRes) {
-    var userId = req.params.userId;
+    var userId = delReq.params.userId;
     
       User
         .findByIdAndRemove(userId)
         .exec(function(err, location) {
             if (err) {
-                res
+                delRes
                     .status(404)
                     .json(err);
             } else {
-                console.log("Hotel deleted, id:", hotelId);
-                res
+                console.log("User deleted, id:", userId);
+                delRes
                     .status(204)
                     .json({});        
             }

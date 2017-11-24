@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 
 var app = express();
 
-app.set('port', 3000);
+app.set('port', 8080);
 app.use(express.static('./public'));
 
 // Enable parsing of posted forms

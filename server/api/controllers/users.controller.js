@@ -17,30 +17,10 @@ module.exports.usersGetAll = function(getReq, getRes) {
 };
 
 module.exports.usersAddOne = function(postReq, postRes) {
-    var username = postReq.body.username;
-
-    User.find({name: username}, function(err, user) {
-        if (err) {
-            console.log('Error creating user');
-            postRes
-                .status(404)
-                .json(err);
-            return;
-        } else if (user) {
-            console.log('Error creating user: User exists');
-            postRes
-                .status(404)
-                .json({
-                    "message": "Error on creating user: User exists"
-                });
-            return;
-        }
-    });
-
-    User
+	User
         .create({
             username: postReq.body.username,
-            // password: postReq.body.password,
+            password: postReq.body.password,
             name: postReq.body.name,
             address: postReq.body.address,
             photo: postReq.body.photo,
@@ -82,13 +62,13 @@ module.exports.usersGetOne = function(getReq, getRes) {
                 return;
             }
             console.log('Found user', user);
-            postRes.json(user);
+            getRes.json(user);
         });
 };
 
 module.exports.usersUpdateOne = function(putReq, putRes) {
     var userId = putReq.params.userId;
-    console.log('userId ->', userId);
+    
     User
         .findById(userId)
         .select('-username')
@@ -108,7 +88,7 @@ module.exports.usersUpdateOne = function(putReq, putRes) {
                     });
                 return;
             }
-            // user.password = putReq.body.password;
+            user.password = putReq.body.password;
             user.name = putReq.body.name;
             user.address = putReq.body.address;
             user.photo = putReq.body.photo;

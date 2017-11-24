@@ -15,4 +15,5 @@ mongoose.connection.on('error', function(err) {
     console.log('Mongoose connection error ' + err);
 });
 
+// Initialize model
 require('./user.model.js');
